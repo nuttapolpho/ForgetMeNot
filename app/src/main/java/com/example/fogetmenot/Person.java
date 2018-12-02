@@ -1,5 +1,8 @@
 package com.example.fogetmenot;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 public class Person {
     private String name;
     private byte[] image;
@@ -21,8 +24,9 @@ public class Person {
         return name;
     }
 
-    public byte[] getImage() {
-        return image;
+    public Bitmap getImage() {
+        Bitmap bitmap = BitmapFactory.decodeByteArray(this.image, 0, this.image.length);
+        return bitmap;
     }
 
     public void setName(String name) {
