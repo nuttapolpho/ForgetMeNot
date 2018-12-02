@@ -125,10 +125,7 @@ public class RunGameActivity extends AppCompatActivity {
     }
 
     private void setNextTurn(Person person){
-        cPerson = person;
-        byte[] img = cPerson.getImage();
-        Bitmap bmp = BitmapFactory.decodeByteArray(img, 0, img.length);
-        propic.setImageBitmap(Bitmap.createScaledBitmap(bmp,
+        propic.setImageBitmap(Bitmap.createScaledBitmap(cPerson.getImage(),
                 (int) getResources().getDimension(R.dimen.imageview_width),
                 (int) getResources().getDimension(R.dimen.imageview_height), false));
         Toast.makeText(getApplicationContext(), cPerson.getName(),Toast.LENGTH_SHORT).show();
