@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,11 +30,13 @@ public class RunGameActivity extends AppCompatActivity {
     private int score = 0;
     private static boolean isFirst = true;
     private boolean isBlank = true;
+    private static int totalSize;
+    private static int countRound = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_run_game);
 
         familyList = new ArrayList<>();
         cPerson = new Person("null");
@@ -73,6 +74,7 @@ public class RunGameActivity extends AppCompatActivity {
                         }}).show();
 
         }
+        totalSize = familyList.size();
     }
 
     private void startVoiceInput() {
@@ -106,6 +108,7 @@ public class RunGameActivity extends AppCompatActivity {
     }
 
     private void runGame(){
+        countRound++;
         if(isFirst){
             cIndex = 0;
             isFirst = false;
@@ -119,8 +122,6 @@ public class RunGameActivity extends AppCompatActivity {
                 end.show();
             }
         }
-
-
     }
 
     private void setNextTurn(Person person){
@@ -151,7 +152,9 @@ public class RunGameActivity extends AppCompatActivity {
         }else{
             rd = new ResultDialog(RunGameActivity.this, false);
         }
-        rd.show();
+        if(countRound < totalSize){
+            rd.show();
+        }
         runGame();
     }
 
