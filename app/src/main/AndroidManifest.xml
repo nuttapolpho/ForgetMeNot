@@ -21,6 +21,7 @@
         <activity android:name=".RunGameActivity" />
         <activity android:name=".AddMemberActivity" />
         <activity android:name=".FamilyMember" />
+        <activity android:name=".MemberListActivity" />
     </application>
 
 </manifest>
