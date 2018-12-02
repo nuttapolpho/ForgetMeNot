@@ -31,7 +31,7 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         play_btn = findViewById(R.id.play_game_btn);
         add_member_btn = findViewById(R.id.add_member_btn);
-//        viewMemberBtn = (Button) findViewById(R.id.view_member_btn);
+        viewMemberBtn = (Button) findViewById(R.id.view_member_btn);
         resetBtn = (Button) findViewById(R.id.button4);
 
         db = new Database(this);
@@ -39,7 +39,7 @@ public class MainMenuActivity extends AppCompatActivity {
         if(db.isEmpty()){
             play_btn.setEnabled(false);
             resetBtn.setEnabled(false);
-//            viewMemberBtn.setEnabled(false);
+            viewMemberBtn.setEnabled(false);
         }
 
         play_btn.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +58,15 @@ public class MainMenuActivity extends AppCompatActivity {
                 startActivity(intent);
 
 
+            }
+        });
+
+        viewMemberBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainMenuActivity.this, MemberListActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -88,12 +97,12 @@ public class MainMenuActivity extends AppCompatActivity {
         if (!db.isEmpty()) {
             play_btn.setEnabled(true);
             resetBtn.setEnabled(true);
-//            viewMemberBtn.setEnabled(true);
+            viewMemberBtn.setEnabled(true);
 
         }else{
             play_btn.setEnabled(false);
             resetBtn.setEnabled(false);
-//            viewMemberBtn.setEnabled(false);
+            viewMemberBtn.setEnabled(false);
         }
     }
 }
