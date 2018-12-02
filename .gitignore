@@ -1,0 +1,16 @@
+
+\.idea/
+
+*.iml
+
+\.gradle/4\.6/fileHashes/
+
+*.bin
+
+*.lock
+
+\.gradle/4\.6/taskHistory/
+
+app/build\.gradle
+
+local\.properties

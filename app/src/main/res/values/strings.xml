@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Forget Me Not?</string>
+    <string name="openGalleryBtn">เลือกรูปจากคลังภาพ</string>
+    <string name="nameLabel">ชื่อ</string>
+    <string name="add_member_btn_text">เพิ่ม</string>
+    <string name="cancel_add_member_btn_text">ยกเลิก</string>
+    <string name="view_member_btn_text">ดูสมาชิก</string>
+    <string name="title_activity_family_member">FamilyMember</string>
+    <string name="correct_answer_string">ถูกต้อง</string>
+    <string name="incorrect_answer_string">ผิด</string>
+    <string name="back_main_menu_string">จบเกม</string>
+    <string name="continue_game_string">ทายต่อ</string>
+    <string name="end_game_string">จบเกม</string>
+</resources>
