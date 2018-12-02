@@ -20,8 +20,8 @@ import java.util.ArrayList;
 public class MainMenuActivity extends AppCompatActivity {
 
     private Database db;
-    private Button btn1;
-    private Button btn2;
+    private Button play_btn;
+    private Button add_member_btn;
     private Button viewMemberBtn;
     private Button resetBtn;
 
@@ -29,20 +29,20 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        btn1 = findViewById(R.id.button1);
-        btn2 = findViewById(R.id.button2);
+        play_btn = findViewById(R.id.play_game_btn);
+        add_member_btn = findViewById(R.id.add_member_btn);
 //        viewMemberBtn = (Button) findViewById(R.id.view_member_btn);
         resetBtn = (Button) findViewById(R.id.button4);
 
         db = new Database(this);
 
         if(db.isEmpty()){
-            btn1.setEnabled(false);
+            play_btn.setEnabled(false);
             resetBtn.setEnabled(false);
 //            viewMemberBtn.setEnabled(false);
         }
 
-        btn1.setOnClickListener(new View.OnClickListener() {
+        play_btn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 Intent intent=new  Intent(MainMenuActivity.this,RunGameActivity.class);
@@ -51,7 +51,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
             }
         });
-        btn2.setOnClickListener(new View.OnClickListener() {
+        add_member_btn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 Intent intent=new  Intent(MainMenuActivity.this, AddMemberActivity.class);
@@ -60,14 +60,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
             }
         });
-
-//        viewMemberBtn.setOnClickListener(new View.OnClickListener() {
-//
-//            public void onClick(View v) {
-//                Intent intent = new  Intent(MainMenu.this, FamilyMember.class);
-//                startActivity(intent);
-//            }
-//        });
 
         resetBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -94,12 +86,12 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
         if (!db.isEmpty()) {
-            btn1.setEnabled(true);
+            play_btn.setEnabled(true);
             resetBtn.setEnabled(true);
 //            viewMemberBtn.setEnabled(true);
 
         }else{
-            btn1.setEnabled(false);
+            play_btn.setEnabled(false);
             resetBtn.setEnabled(false);
 //            viewMemberBtn.setEnabled(false);
         }
