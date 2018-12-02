@@ -1,6 +1,7 @@
 package com.example.fogetmenot;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,6 +39,9 @@ public class AddMemberActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_member);
 
@@ -75,11 +80,20 @@ public class AddMemberActivity extends AppCompatActivity {
                         throw new MyCustomException("Name is Expty");
                     }
                     if (db.insertImage(cImage, cPersonName)){
-                        Toast.makeText(getApplicationContext(), "เพิ่มข้อมูลของ " + cPersonName + " แล้ว :)",Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "เพิ่มข้อมูลของ " + cPersonName + " ไม่สำเร็จ :'(",Toast.LENGTH_SHORT).show();
-                    }
 
+                        new AlertDialog.Builder(AddMemberActivity.this)
+                                .setTitle("สำเร็จ!")
+                                .setMessage("เพิ่มข้อมูลของ " + cPersonName + " สำเร็จ :)")
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .setPositiveButton("เพิ่มข้อมูลต่อ", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        return;
+                                    }})
+                                .setNegativeButton("กลับหน้าหลัก", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        finish();
+                                    }}).show();
+                    }
                 }catch (MyCustomException mex){
                     new AlertDialog.Builder(AddMemberActivity.this)
                             .setTitle("ผิดพลาด")
@@ -92,7 +106,17 @@ public class AddMemberActivity extends AppCompatActivity {
         cancelBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                finish();
+                new AlertDialog.Builder(AddMemberActivity.this)
+                        .setMessage("คุณต้องการจะยกเลิกการเพิ่มข้อมูลหรือไม่")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton("ดำเนินการต่อ", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                return;
+                            }})
+                        .setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                finish();
+                            }}).show();
             }
 
         });

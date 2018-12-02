@@ -3,14 +3,30 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="10dp"
+        android:background="#000000"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="เพิ่มสมาชิก"
+            android:textColor="#FFFF"
+            android:textSize="40sp" />
+    </LinearLayout>
 
 
     <ImageView
         android:id="@+id/add_person_selectedImage"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:src="@drawable/user_default"/>
+        android:src="@drawable/default_profile_pic"/>
 
     <Button
         android:id="@+id/opengallery"
@@ -33,15 +49,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:layout_marginLeft="10dp"
             android:inputType="textPersonName" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:background="#000000">
 
         <Button
             android:id="@+id/cancel_add_member_btn"
@@ -49,6 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:background="#c21807"
+            android:textColor="#FFFFFF"
             android:text="@string/cancel_add_member_btn_text"/>
 
         <Button

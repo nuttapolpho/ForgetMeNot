@@ -13,7 +13,8 @@
             android:id="@+id/item_pic"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/user_default" />
+            android:src="@drawable/user_default"
+            android:foreground="@drawable/img"/>
 
         <TextView
             android:id="@+id/item_name"

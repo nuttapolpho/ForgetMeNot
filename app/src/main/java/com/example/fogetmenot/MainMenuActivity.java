@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -27,6 +28,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         play_btn = findViewById(R.id.play_game_btn);
@@ -73,20 +76,30 @@ public class MainMenuActivity extends AppCompatActivity {
         resetBtn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                if( db.deleteAll()){
-                    new AlertDialog.Builder(MainMenuActivity.this)
-                            .setTitle("สำเร็จ")
-                            .setMessage("ลบข้อมูลเรียบร้อย")
-                            .setIcon(android.R.drawable.ic_dialog_info)
-                            .setPositiveButton("ตกลง", null).show();
-                }else{
-                    new AlertDialog.Builder(MainMenuActivity.this)
-                            .setTitle("ผิดพลาด")
-                            .setMessage("ลบข้อมูลไม่สำเร็จ")
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton("ตกลง", null).show();
-                }
 
+                new AlertDialog.Builder(MainMenuActivity.this)
+                        .setMessage("ค้องการล้างข้อมูลหรือไหม")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                return;
+                            }})
+                        .setNegativeButton("ล้างข้อมูล", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                if( db.deleteAll()){
+                                    new AlertDialog.Builder(MainMenuActivity.this)
+                                            .setTitle("สำเร็จ")
+                                            .setMessage("ลบข้อมูลเรียบร้อย")
+                                            .setIcon(android.R.drawable.ic_dialog_info)
+                                            .setPositiveButton("ตกลง", null).show();
+                                }else{
+                                    new AlertDialog.Builder(MainMenuActivity.this)
+                                            .setTitle("ผิดพลาด")
+                                            .setMessage("ลบข้อมูลไม่สำเร็จ")
+                                            .setIcon(android.R.drawable.ic_dialog_alert)
+                                            .setPositiveButton("ตกลง", null).show();
+                                }
+                            }}).show();
             }
         });
     }
