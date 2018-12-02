@@ -9,9 +9,11 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,12 +29,14 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_1 = "id";
     private static final String COLUMN_2 = "name";
     private static final String COLUMN_3 = "img";
+    private static Context cContext;
 
 
     private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_2 + " TEXT NOT NULL, " + COLUMN_3 + " BLOB NOT NULL)";
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.cContext = context;
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
@@ -48,23 +52,28 @@ public class Database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public Boolean insertImage(String img, String name){
+    public Boolean insertImage(Bitmap image, String name){
         SQLiteDatabase db = this.getWritableDatabase();
+        byte[] img;
         try{
-            FileInputStream fs = new FileInputStream(img);
-            byte[] imgbyte = new byte[fs.available()];
-            fs.read(imgbyte);
+            img = getBytes(image);
+            if(img == null){
+                return false;
+            }
             ContentValues values = new ContentValues();
             values.put(COLUMN_2, name);
-            values.put(COLUMN_3, imgbyte);
+            values.put(COLUMN_3, img);
             db.insert(TABLE_NAME, null, values);
-            fs.close();
             return true;
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        }catch (NullPointerException nux){
+            new AlertDialog.Builder(cContext)
+                    .setTitle("ผิดพลาด")
+                    .setMessage("กรุณาเลือกรูปภาพ")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton("ตกลง", null).show();
             return false;
         }
+
     }
 
     public ArrayList<Person> getPersonList() throws DatabaseException {
@@ -115,6 +124,21 @@ public class Database extends SQLiteOpenHelper {
             return true;
         }
         return false;
+    }
+
+    private byte[] getBytes(Bitmap bitmap) throws NullPointerException {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        try{
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+        } catch (NullPointerException nux){
+            new AlertDialog.Builder(cContext)
+                    .setTitle("ผิดพลาด")
+                    .setMessage("กรุณาเลือกรูปภาพ")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton("ตกลง", null).show();
+            return null;
+        }
+        return stream.toByteArray();
     }
 
 }
