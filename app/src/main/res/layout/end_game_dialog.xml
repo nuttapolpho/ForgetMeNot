@@ -29,8 +29,37 @@
             android:layout_margin="10dp"
             android:textColor="@android:color/white"
             android:textSize="50dp"
+            android:textStyle="bold"
+            android:text="20"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/white"
+            android:text="คะแนนสูงสุด "
+            android:textSize="20sp"
             android:textStyle="bold"/>
 
+        <TextView
+            android:id="@+id/txtv_hscore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
     </LinearLayout>
 
 
