@@ -27,7 +27,7 @@ public class PersonListAdapter extends BaseAdapter {
         ImageView imageView;
         TextView textView;
         Button deleteBtn;
-        Button editBtn;
+//        Button editBtn;
     }
 
     public PersonListAdapter(Context context, int layout, ArrayList<Person> personList) {
@@ -63,7 +63,7 @@ public class PersonListAdapter extends BaseAdapter {
 
             holder.textView = (TextView) row.findViewById(R.id.item_name);
             holder.imageView = (ImageView) row.findViewById((R.id.item_pic));
-            holder.editBtn = (Button) row.findViewById(R.id.edit_btn_member_item);
+//            holder.editBtn = (Button) row.findViewById(R.id.edit_btn_member_item);
             holder.deleteBtn = (Button) row.findViewById(R.id.delete_btn_member_item);
             row.setTag(holder);
         }else{

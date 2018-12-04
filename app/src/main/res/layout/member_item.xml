@@ -36,14 +36,14 @@
                 android:gravity="center"
                 android:layout_marginTop="10dp">
 
-                <Button
-                    android:id="@+id/edit_btn_member_item"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/edit_btn_icon"
-                    android:text="แก้ไข"
-                    android:layout_marginLeft="10dp"
-                    android:background="#FFC300"/>
+                <!--<Button-->
+                    <!--android:id="@+id/edit_btn_member_item"-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:src="@drawable/edit_btn_icon"-->
+                    <!--android:text="แก้ไข"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:background="#FFC300"/>-->
 
                 <Button
                     android:id="@+id/delete_btn_member_item"
