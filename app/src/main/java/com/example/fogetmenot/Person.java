@@ -6,10 +6,12 @@ import android.graphics.BitmapFactory;
 public class Person {
     private String name;
     private byte[] image;
+    private int id;
 
-    public Person(String name, byte[] image){
+    public Person(String name, byte[] image, int id){
         this.name = name;
         this.image = image;
+        this.id = id;
     }
 
     public Person(byte[] image){
@@ -35,6 +37,10 @@ public class Person {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public int getId(){
+        return this.id;
     }
 }
 

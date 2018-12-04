@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
 public class RunGameActivity extends AppCompatActivity {
@@ -33,6 +35,7 @@ public class RunGameActivity extends AppCompatActivity {
     private boolean isBlank = true;
     private static int totalSize;
     private static int countRound = 0;
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +43,14 @@ public class RunGameActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_run_game);
+        propic = (ImageView) findViewById(R.id.imageView2);
+        mVoiceInputTv = (TextView) findViewById(R.id.voiceInput);
+        mSpeakBtn = (ImageButton) findViewById(R.id.btnSpeak);
 
         familyList = new ArrayList<>();
         cPerson = new Person("null");
 
-        Database db = new Database(RunGameActivity.this);
-        propic = (ImageView) findViewById(R.id.imageView2);
-        mVoiceInputTv = (TextView) findViewById(R.id.voiceInput);
-        mSpeakBtn = (ImageButton) findViewById(R.id.btnSpeak);
+        db = new Database(RunGameActivity.this);
         mSpeakBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -58,7 +61,6 @@ public class RunGameActivity extends AppCompatActivity {
 
         try{
             familyList = db.getPersonList();
-            db.close();
             runGame();
             isBlank = false;
         }catch (DatabaseException ex){
@@ -101,8 +103,7 @@ public class RunGameActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String regText = result.get(0);
-                    mVoiceInputTv.setText(regText);
-                    cheackResult(result, cPerson.getName());
+                    checkResult(result, cPerson.getName());
                 }
                 break;
             }
@@ -121,30 +122,33 @@ public class RunGameActivity extends AppCompatActivity {
             if(cIndex < familyList.size()){
                 setNextTurn(familyList.get(cIndex));
             }else{
-                EndGameDialog end = new EndGameDialog(this, score);
+                cIndex = 0;
+                countRound = 0;
+                isFirst = true;
+                Collections.shuffle(familyList);
+                EndGameDialog end = new EndGameDialog(this, score, this);
                 end.show();
             }
         }
     }
 
     private void setNextTurn(Person person){
-        propic.setImageBitmap(Bitmap.createScaledBitmap(cPerson.getImage(),
+        cPerson = person;
+        propic.setImageBitmap(Bitmap.createScaledBitmap(person.getImage(),
                 (int) getResources().getDimension(R.dimen.imageview_width),
                 (int) getResources().getDimension(R.dimen.imageview_height), false));
-        Toast.makeText(getApplicationContext(), cPerson.getName(),Toast.LENGTH_SHORT).show();
     }
 
-    private void cheackResult(ArrayList<String> regconStr, String name){
+    private void checkResult(ArrayList<String> regconStr, String name){
         ResultDialog rd;
         boolean isCorrect = false;
         String a = "REGC: ";
         for(String x: regconStr){
             if(x.equals(name))
                 isCorrect = true;
-
             a += " " + x;
         }
-        Toast.makeText(getApplicationContext(), a + " Name:" + name,Toast.LENGTH_SHORT).show();
+        Log.d("REGC String", a + " Name:" + name);
 
         if(isCorrect){
             score++;

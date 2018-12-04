@@ -87,6 +87,7 @@ public class AddMemberActivity extends AppCompatActivity {
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .setPositiveButton("เพิ่มข้อมูลต่อ", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
+                                        reset();
                                         return;
                                     }})
                                 .setNegativeButton("กลับหน้าหลัก", new DialogInterface.OnClickListener() {
@@ -120,10 +121,6 @@ public class AddMemberActivity extends AppCompatActivity {
             }
 
         });
-
-
-
-
     }
 
     @Override
@@ -241,5 +238,11 @@ public class AddMemberActivity extends AppCompatActivity {
                     finish();
                 }
                 break;
-        }    }
+        }
+    }
+
+    private void reset(){
+        selectedImage.setImageResource(R.drawable.default_profile_pic);
+        photoName.setText("");
+    }
 }

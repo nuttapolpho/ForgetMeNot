@@ -31,8 +31,12 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_3 = "img";
     private static Context cContext;
 
+    private static final String HSCORE_TABLE_NAME = "hscore";
+    private static final String COL_1_HSCORE_TABLE_NAME = "id";
+    private static final String COL_2_HSCORE_TABLE_NAME = "score";
 
-    private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_2 + " TEXT NOT NULL, " + COLUMN_3 + " BLOB NOT NULL)";
+    private static final String CREATE_TABLE_PERSON = "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_2 + " TEXT NOT NULL, " + COLUMN_3 + " BLOB NOT NULL)";
+    private static final String CREATE_TABLE_HSCORE = "CREATE TABLE " + HSCORE_TABLE_NAME + " (" + COL_1_HSCORE_TABLE_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_2_HSCORE_TABLE_NAME + " INTEGER NOT NULL)";
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,13 +46,14 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE);
-        Log.i("Table..","Created");
+        db.execSQL(CREATE_TABLE_PERSON);
+        db.execSQL(CREATE_TABLE_HSCORE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + HSCORE_TABLE_NAME);
         onCreate(db);
     }
 
@@ -85,27 +90,11 @@ public class Database extends SQLiteOpenHelper {
         }
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
+            int id = cursor.getInt(0);
             String name = cursor.getString(1);
             byte[] image = cursor.getBlob(2);
-            Person p  = new Person(name, image);
+            Person p  = new Person(name, image, id);
             list.add(p);
-            cursor.moveToNext();
-        }
-        Collections.shuffle(list);
-        return list;
-    }
-
-    public ArrayList<String> getPersonListString() throws DatabaseException {
-        ArrayList<String> list = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
-        if(cursor.getCount() == 0){
-            throw new DatabaseException("Nothing Found!");
-        }
-        cursor.moveToFirst();
-        while(!cursor.isAfterLast()){
-            String name = cursor.getString(1);
-            list.add(name);
             cursor.moveToNext();
         }
         Collections.shuffle(list);
@@ -115,6 +104,13 @@ public class Database extends SQLiteOpenHelper {
     public boolean deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, "1", null) > 0;
+    }
+
+    public boolean deteleMember(int id){
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_1 + " = " + id;
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, COLUMN_1 + " = " + id, null) > 0;
+
     }
 
     public boolean isEmpty(){
@@ -139,6 +135,22 @@ public class Database extends SQLiteOpenHelper {
             return null;
         }
         return stream.toByteArray();
+    }
+
+    public void insertHScore(int score){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_2_HSCORE_TABLE_NAME, score);
+        long a = db.insert(HSCORE_TABLE_NAME, null, values);
+        Log.i("SOM" , a + "");
+    }
+
+    public int getHScore(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + COL_2_HSCORE_TABLE_NAME + " FROM " + HSCORE_TABLE_NAME +
+                " WHERE 1 ORDER BY " + COL_2_HSCORE_TABLE_NAME + " DESC", null);
+        cursor.moveToFirst();
+        return cursor.getInt(0);
     }
 
 }

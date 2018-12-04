@@ -43,7 +43,7 @@ public class MemberListActivity extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] bitmapdata = stream.toByteArray();
 
-            Person p = new Person("ไม่มีข้อมูล", bitmapdata);
+            Person p = new Person("ไม่มีข้อมูล", bitmapdata, -1);
             personList.add(p);
         }
         adapter = new PersonListAdapter(this, R.layout.member_item, personList);

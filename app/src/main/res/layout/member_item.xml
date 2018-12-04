@@ -13,16 +13,47 @@
             android:id="@+id/item_pic"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/user_default"
-            android:foreground="@drawable/img"/>
+            android:src="@drawable/user_default"/>
 
-        <TextView
-            android:id="@+id/item_name"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="NAME"
-            android:textSize="17sp" />
-   </LinearLayout>
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginLeft="10dp">
 
+            <TextView
+                android:id="@+id/item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NAME"
+                android:textSize="40sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/edit_btn_member_item"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/edit_btn_icon"
+                    android:text="แก้ไข"
+                    android:layout_marginLeft="10dp"
+                    android:background="#FFC300"/>
+
+                <Button
+                    android:id="@+id/delete_btn_member_item"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/delete_btn_icon"
+                    android:text="ลบ"
+                    android:background="#C70039"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
