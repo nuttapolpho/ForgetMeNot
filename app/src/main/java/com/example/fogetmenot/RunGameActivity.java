@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -123,6 +124,7 @@ public class RunGameActivity extends AppCompatActivity {
                 setNextTurn(familyList.get(cIndex));
             }else{
                 cIndex = 0;
+                countRound = 0;
                 isFirst = true;
                 Collections.shuffle(familyList);
                 EndGameDialog end = new EndGameDialog(this, score, this);
@@ -148,7 +150,7 @@ public class RunGameActivity extends AppCompatActivity {
                 isCorrect = true;
             a += " " + x;
         }
-        Toast.makeText(getApplicationContext(), a + " Name:" + name,Toast.LENGTH_SHORT).show();
+        Log.d("REGC String", a + " Name:" + name);
 
         if(isCorrect){
             score++;
