@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Forget Me Not?</string>
+    <string name="app_name">Forget Me Not</string>
     <string name="openGalleryBtn">เลือกรูปจากคลังภาพ</string>
     <string name="nameLabel">ชื่อ</string>
     <string name="add_member_btn_text">เพิ่ม</string>
