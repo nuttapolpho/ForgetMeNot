@@ -31,6 +31,7 @@ public class EndGameDialog extends Dialog implements
 
         Button endGame_btn = (Button) findViewById(R.id.btn_end_game_score);
         Database db = new Database(context);
+        db.insertHScore(score);
 
         endGame_btn.setOnClickListener(this);
 
