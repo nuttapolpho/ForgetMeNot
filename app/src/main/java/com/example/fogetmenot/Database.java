@@ -90,9 +90,10 @@ public class Database extends SQLiteOpenHelper {
         }
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
+            int id = cursor.getInt(0);
             String name = cursor.getString(1);
             byte[] image = cursor.getBlob(2);
-            Person p  = new Person(name, image);
+            Person p  = new Person(name, image, id);
             list.add(p);
             cursor.moveToNext();
         }
@@ -103,6 +104,13 @@ public class Database extends SQLiteOpenHelper {
     public boolean deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, "1", null) > 0;
+    }
+
+    public boolean deteleMember(int id){
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_1 + " = " + id;
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, COLUMN_1 + " = " + id, null) > 0;
+
     }
 
     public boolean isEmpty(){
