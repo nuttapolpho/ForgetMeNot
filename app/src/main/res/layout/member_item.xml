@@ -13,11 +13,6 @@
             android:id="@+id/item_pic"
             android:layout_width="150dp"
             android:layout_height="150dp"
-<<<<<<< HEAD
-=======
-            android:maxWidth="150dp"
-            android:maxHeight="150dp"
->>>>>>> memberList
             android:src="@drawable/user_default"/>
 
         <LinearLayout
