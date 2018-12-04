@@ -103,7 +103,6 @@ public class RunGameActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String regText = result.get(0);
-                    mVoiceInputTv.setText(regText);
                     checkResult(result, cPerson.getName());
                 }
                 break;
@@ -138,7 +137,6 @@ public class RunGameActivity extends AppCompatActivity {
         propic.setImageBitmap(Bitmap.createScaledBitmap(person.getImage(),
                 (int) getResources().getDimension(R.dimen.imageview_width),
                 (int) getResources().getDimension(R.dimen.imageview_height), false));
-        Toast.makeText(getApplicationContext(), cPerson.getName(),Toast.LENGTH_SHORT).show();
     }
 
     private void checkResult(ArrayList<String> regconStr, String name){
