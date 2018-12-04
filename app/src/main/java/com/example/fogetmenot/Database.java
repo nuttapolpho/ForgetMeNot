@@ -34,12 +34,9 @@ public class Database extends SQLiteOpenHelper {
     private static final String HSCORE_TABLE_NAME = "hscore";
     private static final String COL_1_HSCORE_TABLE_NAME = "id";
     private static final String COL_2_HSCORE_TABLE_NAME = "score";
-    private static final int PRIMARY_KEY_HSCORE = 1;
-
-
 
     private static final String CREATE_TABLE_PERSON = "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_2 + " TEXT NOT NULL, " + COLUMN_3 + " BLOB NOT NULL)";
-    private static final String CREATE_TABLE_HSCORE = "CREATE TABLE " + HSCORE_TABLE_NAME + " (" + COL_1_HSCORE_TABLE_NAME + " INTEGER PRIMARY KEY, " + COL_2_HSCORE_TABLE_NAME + " INTEGER NOT NULL)";
+    private static final String CREATE_TABLE_HSCORE = "CREATE TABLE " + HSCORE_TABLE_NAME + " (" + COL_1_HSCORE_TABLE_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_2_HSCORE_TABLE_NAME + " INTEGER NOT NULL)";
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -132,38 +129,20 @@ public class Database extends SQLiteOpenHelper {
         return stream.toByteArray();
     }
 
-    public int updateHScore(int score){
+    public void insertHScore(int score){
         SQLiteDatabase db = this.getWritableDatabase();
-        if(getHScore() < 0){
-            ContentValues values = new ContentValues();
-            values.put(COL_1_HSCORE_TABLE_NAME, PRIMARY_KEY_HSCORE);
-            values.put(COL_2_HSCORE_TABLE_NAME, score);
-            db.insert(HSCORE_TABLE_NAME, null, values);
-            return score;
-        }else if(getHScore() > score){
-            return getHScore();
-        }else{
-            String strFilter =  COL_1_HSCORE_TABLE_NAME + "=" + PRIMARY_KEY_HSCORE;
-            ContentValues args = new ContentValues();
-            args.put(COL_2_HSCORE_TABLE_NAME, score);
-            db.update(HSCORE_TABLE_NAME, args, strFilter, null);
-            return score;
-        }
+        ContentValues values = new ContentValues();
+        values.put(COL_2_HSCORE_TABLE_NAME, score);
+        long a = db.insert(HSCORE_TABLE_NAME, null, values);
+        Log.i("SOM" , a + "");
     }
 
     public int getHScore(){
         SQLiteDatabase db = this.getWritableDatabase();
-        try {
-
-            Cursor cursor = db.rawQuery("select " + COL_2_HSCORE_TABLE_NAME + " from " + HSCORE_TABLE_NAME +
-                    " where " + COL_1_HSCORE_TABLE_NAME + " = " + PRIMARY_KEY_HSCORE, null);
-            cursor.moveToFirst();
-            return cursor.getInt(1);
-
-        }catch (SQLiteException sqlex){
-
-            return -1;
-        }
+        Cursor cursor = db.rawQuery("SELECT " + COL_2_HSCORE_TABLE_NAME + " FROM " + HSCORE_TABLE_NAME +
+                " WHERE 1 ORDER BY " + COL_2_HSCORE_TABLE_NAME + " DESC", null);
+        cursor.moveToFirst();
+        return cursor.getInt(0);
     }
 
 }
