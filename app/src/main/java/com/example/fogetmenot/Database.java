@@ -106,6 +106,13 @@ public class Database extends SQLiteOpenHelper {
         return db.delete(TABLE_NAME, "1", null) > 0;
     }
 
+    public boolean deteleMember(int id){
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_1 + " = " + id;
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, COLUMN_1 + " = " + id, null) > 0;
+
+    }
+
     public boolean isEmpty(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
